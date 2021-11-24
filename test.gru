@@ -1,0 +1,1613 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+			<!-- Stylesheets -->
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href='css/yoworld.css?v=9908'>
+		<link rel="stylesheet" type="text/css" href='css/griddle.css'>
+		<link rel="stylesheet" type="text/css" href='css/ProductComponent.css?v=7'>
+		<style> #game_swf_loading { background-image: url("/cdn/textures/loading_screen.jpg?v=9908"); } </style>
+
+		<!-- Scripts -->
+		<script type="text/javascript" charset="utf-8" src="js_deploy/support/jquery.min.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js_deploy/support/require.js"></script>
+					<script type="text/javascript" src="js_deploy/support/swfobject_icestone.js?v=1"></script>
+		
+		<link rel="preload" as="script" href="https://yw-web.yoworld.com/flash/bin-debug/YoVilleApp.js?v=2710">
+		
+		<script type="text/javascript" charset="utf-8" src="js_deploy/support/e.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js_deploy/support/console-polyfill.js"></script>
+		<script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script>
+
+		<script type="text/javascript">
+			window.onerror = function errorHandler(message, file, line, col, error) {
+				$.ajax({
+					type: "POST",
+					url: "/gamecontrol/log_error.php",
+					data: {"message":message, "file": file, "line": line, "col": col, "jsError":error}
+				});
+				return false;
+			};
+		</script>
+
+		<script type="text/javascript" charset="utf-8">
+			var FB_APP_NAMESPACE = "playyoworld";
+			var FB_APP_ID = "21526880407";
+			var FB_CHANNEL_URL = "";
+			var FB_GRAPH_API_VERSION = "v8.0";
+			var GA_TRACKING_ID = "UA-41145067-8";
+			var GA_HOSTNAME = "yoworld.com";
+			var PRODUCT_HOST = "https://yw-web.yoworld.com/kellaa/";
+			var REST_SERVER_ROOT = "https://yw-web.yoworld.com/rest/";
+			var STATIC_BASE_URL = "https://yw-web.yoworld.com//cdn/";
+			var WEB_HOSTNAME = "yw-web.yoworld.com/";
+			var fbUserId = userfbid = "107327461025802";
+			var clientAuth = "signed_request=mWMfGbsXad85PuxttnPqtSUS9JrNN2dOYZRnVEE-m9I.eyJhbGdvcml0aG0iOiJITUFDLVNIQTI1NiIsImV4cGlyZXMiOjE2MTQ4MjY4MDAsImlzc3VlZF9hdCI6MTYxNDgyMDgxMywib2F1dGhfdG9rZW4iOiJFQUFBQUJRTWFJSmNCQUJjbVpDVkdpcExaQXlaQjdaQlpCaVNYeVZicmlKWkNOWkF3dnU3U0k5a0hsVk5lckIzNFZwZHRhSWdFWkI2aDVwYU8zQ1pDY2V3UG0zMXc3VDJSNHlXTlUxZTdOYmRJdXhoN2pqMUdzcHRnbmZEQnZKZm03V0M3enFyWkN3OEppeHB1T3hlRlQ0WkJpQXFkVDhxcU85Z25Dc3VDUTdNV2lFbWRpaVE4Y2tmN3RSc3BWNGVCV0JTbWtRWkQiLCJ0b2tlbl9mb3JfYnVzaW5lc3MiOiJBYnlSNVhZRzd4NTB3MEEzIiwidXNlcl9pZCI6IjEwNzMyNzQ2MTAyNTgwMiJ9";
+			var myFirstName = "Avery";
+			var FIRST_NAME = "Avery";
+			var LAST_NAME  = "King";
+			var SLOTS_TGC_URL = "https://cdn.tgcn.io/ie/bvg/games/index.html?host=bvg";
+			
+			var isInsideAppStream = false;
+			
+			// Global because yolo
+			var operatingSystem = "WINDOWS";
+			var clientType = "FACEBOOK";
+			var browserVendor = "Firefox"
+			var runtime = "HTML5";
+
+			var chargebackRepayment = {};
+			chargebackRepayment.purchases = []; // serialized as JSON in index.php
+			chargebackRepayment.amountOwed = 0;
+
+			// this appears to be a cache breaker for stream post images
+			var staticVersion = 2;
+
+			var showConsentForm = 0;
+			var showAccountDetails = 0;
+			var accountDeleteRequested = 0;
+			
+			// For consent form A/B test
+			var testingOriginalConsentForm = "true";
+			
+			var isSupportInMaintenance = false;
+
+		</script>
+		</head>
+	<body style="position: absolute; width: 100%; height: 1600px; overflow: hidden">
+
+	
+	
+		<div id="main_content">
+							<div id="html5AnnouncementContainer" style="margin:auto;width:750px;margin-top:3px;">
+					<a href="https://forums.yoworld.com/viewforum.php?f=29" id="html5AnnouncementContent" class="alert alert-info big" style="width:740px; display:block; text-decoration: none" target="_blank">
+						You are currently playing the HTML5 version of YoWorld. If anything doesn't seem quite right, we're still ironing things out! For more information, or to report an issue, please click <u>HERE</u>.
+					</a>
+				</div>
+			
+			<div class="notification center">
+				<div id="admin-messages"></div>
+				<div class="clear"></div>
+			</div>
+
+					<div class="bonus-offer center">
+						<div id="bonusOfferContainer">
+					<div id="bonusOffer" class="ac" style="display:none;"></div>
+				</div>
+				<div id="bonusOfferTimeLeft"></div>
+				<div id="bonusOfferDisplayText"></div>
+			</div>
+
+
+						<div id="topbar" class="game-tabs">
+			
+				<ul>
+									<li id="downloadOpen" class="highlight-tab inactive">
+						<a title="Download">Download</a>
+					</li>
+					<li>
+						<a id="freeGiftsOpen" title="Free Gifts">Free Gifts <span id="header-freegifts-count" class="badge hidden"></span></a>
+					</li> 
+									<li id="header-purchase-tab" class="cash-tab inactive">
+						<a title="Add YoCash"><span>Add YoCash</span><span id="header-deal-count" class="badge hidden"></span></a>
+					</li>
+					<li>
+						<a target="new" href="https://forums.yoworld.com">Community</a>
+					</li>
+										<li id="header-inbox-tab">
+						<a title="Inbox">Inbox <span id="header-inbox-count" class="badge hidden"></span></a>
+					</li>
+										<li id="pollsOpen" class="inactive">
+						<a title="Polls">Polls<span id="header-polls-badge" class="badge hidden">1</span></a>
+					</li>
+					<li id="subscriptionOpen" class="highlight-tab inactive">
+						<a title="Subscribe to YoWorld">VIP<span id="header-vip-warn" class="badge hidden"></span></a>
+					</li>
+					<li id="vipStoreOpen" class="vip-store-tab inactive">
+						<a title="Buy VIP Items">VIP Store<span id="header-vip-warn" class="badge hidden"></span></a>
+					</li>
+					<li class="inactive" id="accountOpen">
+						<a title="Account">Settings <span id="settings-tab-notification-badge" class="badge hidden">!</span></a>
+					</li>
+										<li class="inactive" id="logOpen"><a title="Log">Log</a></li>
+					
+					<li id="header-help-tab" class="inactive"
+						 data-email="" data-first-name="Avery" data-last-name="King" data-player-id="187817894" 
+						 data-facebook-id="107327461025802" data-email-confirmed="0">
+						 <a title="Help">Help</a>
+					</li>
+
+				</ul>
+			</div>
+
+						
+									<div id="swf_stack_wrap" style="position: absolute; width: 100%; height: 100%; display: none; top: -400px;">
+						<div id="swf_stack_div"></div>
+					</div>
+				
+				<div id="decorChallengeCriteriaPlaceholder" style="position: absolute; top: 100px; width:150px; right:10px; "></div>
+
+				<div id="game" class="center">
+					<div id="game_swf_div">
+						<div id="flash_version_needed" style="display:none; text-align: left;">
+							<div>
+								
+
+<div id="flash_allow" class="warning">
+	<div class="cards ">
+		<div class="card shadow" style="display:none;">
+				</div>
+		<div class="card shadow" style="margin:auto; float:none;">
+			<div class="card-content">
+				<h3>Download the<br />YoWorld Desktop App Now!</h3>
+				<p>Solve your flash plugin issues for good<br/>with the free YoWorld Desktop app!</p>
+				<div class="app-image">
+					<img src="/images/flash_warn/yoworld_desktop_app.png" alt="Yoworld Desktop App">
+				</div>
+			</div>
+			<div class="card-footer has-streaming-link" id="download_app">
+				<button id="download_yw_btn">Download YoWorld</button>
+								<a class="appstream-link" href="/?lgt=11d26018-57f2-4dbd-bf55-ca439da65d4f&amp;ref=bookmarks&amp;fb_source=bookmark&amp;count=0&amp;appstream=true">No thanks</a>
+								<div class="abs prize-image">
+					<img src="/images/flash_warn/exclusive_badge.png" alt="Exclusive Prizes">
+				</div>
+			</div>
+		</div>
+	</div>
+		<div class="footer">
+		<p><b>Still having problems? </b><a id="footer-help-tab" target="_blank">Please click here to <b> Submit a Support Ticket.</b></a>.</p>
+	</div>
+</div>
+<div id="flash_allow_cover">
+	<div id="flash_allow_prompt" class="modal-instruction">
+		<h4>To play YoWorld, you must allow Flash to run</h4> 
+		<div class="m-y-1">
+			<a href="https://www.adobe.com/go/getflashplayer" target="_blank">
+				<button id="allow_flash">Allow Flash...</button>
+			</a>
+		</div>
+	</div>
+	<div id="flash_allow_instructions" class="modal-instruction">
+		<div id="flash_allow_arrow">
+			<img src="/images/flash_allow/flash-allow-arrow.png" alt="">
+		</div>
+		<h4 class="bl">If you see this dialog, click Allow</h4>
+		<img class="how-to-image shadow" src="/images/flash_allow/flash-allow-alert.png" alt="">
+		<div class="m-y-1">
+			<button id="close_btn"><span>I don't see that dialog...</span></button>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	// Add the listeners based on the browser
+	if (window.attachEvent) {
+		window.attachEvent('DOMContentLoaded', function onPageLoadedIE() {
+			window.detachEvent('DOMContentLoaded', onPageLoadedIE);
+			trackPageLoad();
+		});
+
+		document.getElementById("download_yw_btn").attachEvent("click", onDownloadElectron);
+		document.getElementById("allow_flash").attachEvent("click", onAllowFlashClicked);
+		document.getElementById("close_btn").attachEvent("click", onCloseFlashOverlay);
+	} else if (window.addEventListener) {
+		window.addEventListener('DOMContentLoaded', function onPageLoaded() {
+			window.removeEventListener('DOMContentLoaded', onPageLoaded);
+			trackPageLoad();
+		});
+
+		document.getElementById("download_yw_btn").addEventListener("click", onDownloadElectron);
+		document.getElementById("allow_flash").addEventListener("click", onAllowFlashClicked);
+		document.getElementById("close_btn").addEventListener("click", onCloseFlashOverlay);
+
+	}
+
+	if (browserVendor == "Chrome"){
+		$("#flash_allow_instructions").hide();
+		$("#flash_allow .footer").hide();
+		$("#flash_allow .cards").hide();
+		$("#flash_allow .comparison").hide();
+	} else {
+		$("#flash_allow_prompt").hide();
+		$("#flash_allow_instructions").hide();
+		$("#flash_allow_cover").hide();
+		$("#flash_allow .footer").show();
+		$("#flash_allow .cards").show();
+	}
+
+
+	/**
+	 * Track a page load
+	 */
+	function trackPageLoad() {
+		var flashAllowCoverElement = document.getElementById("flash_allow_cover");
+		if (flashAllowCoverElement !== null && flashAllowCoverElement.offsetParent !== null) {
+			// flash_allow_cover is not hidden
+			$.ajax({
+				type: "POST",
+				url: "/gamecontrol/flash_allow.php?ep=trackFlashAllowPageLoaded&snapi_auth=185245280::19a4bf39d5ab8fa0cc3c3f12c12e28e2",
+				data: { browser: browserVendor}
+			});
+		}
+	}
+
+	/**
+	 * Downloads electron for yoworld
+	 */
+	function onDownloadElectron() {
+					window.location.href = "https://downloads.bigvikinggames.com/YoWorld.exe";
+				$.ajax({
+			type: "POST",
+			url: "/gamecontrol/flash_allow.php?ep=trackDownloadClick&snapi_auth=185245280::19a4bf39d5ab8fa0cc3c3f12c12e28e2",
+			data: { browser: browserVendor}
+		});
+	}
+
+	/**
+	 * Shows the overlay when allow flash is clicked
+	 */
+	function onAllowFlashClicked() {
+		$("#flash_allow_prompt").hide();
+		$("#flash_allow_instructions").show();
+
+		$.ajax({
+			type: "POST",
+			url: "/gamecontrol/flash_allow.php?ep=trackAllowFlashClick&snapi_auth=185245280::19a4bf39d5ab8fa0cc3c3f12c12e28e2",
+			data: { browser: browserVendor}
+		});
+	}
+
+	/**
+	 * Closes the overlay
+	 */
+	function onCloseFlashOverlay() {
+		$("#flash_allow_cover").hide();
+		$("#flash_allow .footer").show();
+		$("#flash_allow .cards").show();
+		$("#flash_allow .comparison").show();
+	}
+
+</script>							</div>
+						</div>
+					</div>
+					<div id="game_swf_loading">
+	<div id="game_swf_loading_bar" class="indeterminate">
+		<div id="game_swf_loading_text_container">
+			<span id="game_swf_loading_percentage"></span>
+			<span id="game_swf_loading_text"> Loading... </span>
+		</div>
+	</div>
+</div>				</div>
+
+				<div class="clear"></div>
+
+		  	
+		</div>
+
+		<div class="game-page-footer  center">
+	<div style='font-size:12px;line-height:14px;text-align:center'>
+		<div class="fb-like" style='padding-left:50px;position:relative;top:5px;' data-href="http://www.facebook.com/yoville" data-width="340" data-height="20" data-layout="standard" data-show-faces="false" data-send="false"></div>
+		<div style="width:100%;padding:5px 0px 5px 0px">
+			<a target="new" href="http://www.facebook.com/yoville">YoWorld Fanpage!</a> | 
+			<a href='https://www.bigvikinggames.com/privacy-policy/' target="new" >Privacy Policy</a> | 
+			<a href='https://www.bigvikinggames.com/terms-of-service/' target="new" >Terms of Service</a> | 
+			<span style='position:relative;top:5px'>
+				<a href="https://twitter.com/YoWorldGame" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false" data-lang="en">Follow @ YoWorld</a>
+			</span>
+		</div>
+		<div style="width:100%;">Copyright &copy; 2009-2021 Big Viking Games Inc.  Game time is currently: <span data-server-time="March 04, 2021 01:20:21" id="server_time"></span></div>
+	</div>
+	<div class="clear"></div>
+</div>
+		
+		
+		
+		<script type="text/javascript" charset="utf-8">
+
+			//If they need to agree to consent forms, don't show the flash help yet
+			// they don't have flash 
+			if(showConsentForm == 0 && !swfobject.hasFlashPlayerVersion("11.7.0"))
+			{
+				document.getElementById("flash_version_needed").style.display = "block";
+			}
+
+			var flashvars = {
+				"rest_server_root": REST_SERVER_ROOT,
+				"is_inside_appstream": isInsideAppStream,
+							"user": "185245280",
+							"prank_active": "0",
+							"playerSettings": "%7B%222%22%3A%220%22%2C%223%22%3A%220%22%2C%224%22%3A%220%22%2C%228%22%3A%220%22%7D",
+							"casinoLockout": "",
+							"lockCodeSettings": "disabled",
+							"photosTaken": "0",
+							"oneTimeRewardFlag": "0",
+							"showAuctionHouse": "1",
+							"ahMaxCoinNumItem": "5",
+							"allowCashAuctionHouse": "1",
+							"ahMaxCashNumItem": "5",
+							"ahLiveCashItemBidIds": "%5B%5D",
+							"allowPremiumAuctionHouse": "1",
+							"ahLiveCoinItemBidIds": "%5B%5D",
+							"ahPremiumItemBidIds": "%5B%5D",
+							"ahNonAuctionableItemIds": "15216",
+							"ahCategoryInfo": "%7B%22clothing%22%3A%5B%22Pants%22%2C%22Shirts%22%2C%22Shorts%22%2C%22Skirts%22%2C%22Dresses%22%2C%22Shoes%22%2C%22Swimwear%22%2C%22Club+Wear%22%2C%2270%27s+Wear%22%2C%22Jackets%22%2C%22Costumes%22%2C%22Hats%22%2C%22Item%22%2C%22Pet+Clothing%22%2C%22WaterRidable%22%5D%2C%22accessories%22%3A%5B%22Glasses%22%2C%22Bracelets%22%2C%22Bracelet2%22%2C%22Handhelds%22%2C%22Rings%22%2C%22Earrings%22%2C%22Necklaces%22%2C%22Gloves%22%2C%22Belts%22%2C%22Earrings2%22%5D%7D",
+							"fbAuctionHouseSortExp": "2",
+							"yoAuthKey": "6f2073fb32a2993f807682a6f3f98645",
+							"loadStartTime": "1614820821",
+							"referral": "bookmarks",
+							"autoCreateNewPlayer": "",
+							"lk": "19a4bf39d5ab8fa0cc3c3f12c12e28e2",
+							"zySnId": "1",
+							"qsJSON": "%7B%22lgt%22%3A%2211d26018-57f2-4dbd-bf55-ca439da65d4f%22%2C%22ref%22%3A%22bookmarks%22%2C%22count%22%3A%220%22%7D",
+							"exJSON": "%5B%7B%22id%22%3A%22YO_DISASTER_RELIEF_POPUP%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YO_PLATINUM_DAY_SALE2%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YO_PLATINUM_STORE%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22LABOR_DAY_SATURDAY2%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOGI%22%2C%22var%22%3A2%7D%2C%7B%22id%22%3A%22YOVILLE_AUTOMATED_GIFT%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_ONE_TIME_REWARD%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_ZBAR2%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_SUBSCRIPTION_TEST%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_ZSC%22%2C%22var%22%3A3%7D%2C%7B%22id%22%3A%22YOVILLE_A2U%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22YOVILLE_ZMFS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_MONEY_IFRAME%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22NEW_INAPPSALE%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_SUBSCRIPTION%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_SUBSCRIPTION_FREE_TRIAL%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22YOVILLE_GAME_CARDS%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_AUCTION_HOUSE%22%2C%22var%22%3A3%7D%2C%7B%22id%22%3A%22YOVILLE_AUCTION_HOUSE_FB_NOTIF%22%2C%22var%22%3A4%7D%2C%7B%22id%22%3A%22YOVILLE_AUCTION_HOUSE_INTRO_POPUP%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_AUCTION_HOUSE_SORT%22%2C%22var%22%3A2%7D%2C%7B%22id%22%3A%22YOVILLE_AUCTION_HOUSE_CASH%22%2C%22var%22%3A3%7D%2C%7B%22id%22%3A%22YOVILLE_AUCTION_HOUSE_PREMIUM%22%2C%22var%22%3A3%7D%2C%7B%22id%22%3A%22YOVILLE_MIGRATION%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22FLPROMO%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22PROMOD%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22WORKARROW%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOMSGFORMAT%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22NUXT%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22friendscroll%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22yo_fg2%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22ZONEOP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22JOBS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22TUTORIALJOB%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOQUICKCREATE%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOBL%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22LADDER_ENERGY%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22GIFT_WALL%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22HUD_ICON_COUNTER%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22UPDATED_WHATS_NEW%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22CARLOT_STORE%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YO_NPS_SURVEY_6%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22PURCHASE_REENGAGEMENT_DISCOUNT%22%2C%22var%22%3A3%7D%2C%7B%22id%22%3A%22SHARE_BTN_TXT%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22AUTO_CRAFTING_POPUP%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YO_EXTENDED_CONTEST_LEVELS%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YO_BLACK_FRIDAY_SALE_2010%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22STORE_PAGING%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YO_TPID%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YO_FRIENDS_VIRALS%22%2C%22var%22%3A3%7D%2C%7B%22id%22%3A%22ZTRACK_BATCH_REQ%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22MFS_FQL_DSAPI%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YO_PERMS_INCENTIVIZATION%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22NEW_BUYERS_DISCOUNT%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22ABANDONMENT_DISCOUNT%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YO_RAFFLE_FEED_EXP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YO_USE_FBWALL%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YO_NPS_ZSURVEY_EXP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22ASSET_SHARDING%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_PAYMENTS_GIFTPACK%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_BUNDLE_PACKAGES%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_PLAYER_TOPUP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_FLASH_ISSUE_WORKAROUND%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_YOMART_SET%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_OPEN_ALL_MYSTERY_CHEST%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_WOF%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_FULLSCREEN%22%2C%22var%22%3A3%7D%2C%7B%22id%22%3A%22YOVILLE_FULLSCREEN_INTRO_POPUP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YO_UI_REVAMP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22HORO%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22CLICK_TO_BUY%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YO_AVENUE_MAP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22UPDATED_WHATS_NEW_STORE%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22DID_YOU_KNOW%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22NEW_USER_EXP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_STATUS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_RELATIONSHIP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_ITEMCOUNT%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_FPS_WALK%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_HIDE_SEEK%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_STORE_SEARCH%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_COLLECTIBLE_PREVIEW%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_ADOBE_LOAD_ASSETS%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_DIBS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_NIGHTCLUB_BAR%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22HOME_PROMO%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22YOZAP%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YO_FLASHMFS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YO_SPL_DEL_AUTOPOPUP%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YO_HOME_NAVIGATOR%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_BATCH_INVENTORY%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22YOVILLE_SPENDOMETER%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_ANIM_CACHE%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22YOVILLE_PRELOADER_CALLS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_CHAT_MOODS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_SHOW_BOOKMARK_BANNER%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_DOUBLE_COIN%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_BOOKMARK_ENTRY_REWARD%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_BOOKMARK_TUTORIAL%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22yo_clear_room%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_LKAR%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_MAGAZINE%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_MAGAZINE2%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22FACTORY_HOTDOG_LOGS%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_INV_BULK_DELETE%22%2C%22var%22%3A2%7D%2C%7B%22id%22%3A%22YOVILLE_LOAD_TIME_CALLS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_DS_OPTIMIZE%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_ROOM_RATING%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_INV_OPEN_ALL%22%2C%22var%22%3A2%7D%2C%7B%22id%22%3A%22YOVILLE_NEW_TABS%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22YOVILLE_NEW_GIFT_LIMIT%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22yo_zap_zac%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22yo_zap_zac_dac%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22yo_zap_zac_dac_bac%22%2C%22var%22%3A1%7D%2C%7B%22id%22%3A%22yo_zap_zac_dac_sliding_billboard%22%2C%22var%22%3Afalse%7D%2C%7B%22id%22%3A%22yo_zap_zac_skyscraper%22%2C%22var%22%3A0%7D%2C%7B%22id%22%3A%22YOVILLE_XPROMO_HOT%22%2C%22var%22%3A0%7D%5D",
+							"playersJSON": "%7B%22187817894%22%3A%7B%22makeup%22%3A%5B%5D%2C%22instance%22%3A%22101004%22%2C%22gender%22%3A2%2C%22pants%22%3A%5B35641%2C106%2C30747%2C33225%2C124044%2C209%2C131765%2C29775%2C29962%5D%2C%22ring%22%3A%5B%5D%2C%22scarf%22%3A%5B%5D%2C%22cash_partial%22%3A0%2C%22playerInfo%22%3A%7B%22walkAction%22%3A0%2C%22speechBalloonColor%22%3A%225274111%22%2C%22allTimeOutfitLikes%22%3A1%2C%22establishedPlayer%22%3Atrue%2C%22onlineStatus%22%3A4%2C%22freeItemTokens%22%3A%7B%2234090%22%3A1%7D%2C%22idleAction%22%3A0%2C%22migInvVersion%22%3A0%2C%22grantedOutfitSlots%22%3A0%2C%22temporaryItems%22%3A%5B%5D%2C%22entranceAction%22%3A0%2C%22cashOutfitSlots%22%3A0%2C%22currentOutfitId%22%3A%220%22%2C%22coinOutfitSlots%22%3A1%2C%22electronUser%22%3Afalse%2C%22newPlayerClothesToken%22%3Afalse%2C%22equippableUpgrade%22%3A0%7D%2C%22body%22%3A%5B%5D%2C%22bracelet2%22%3A%5B%5D%2C%22eyes%22%3A%5B%5D%2C%22speed%22%3A0%2C%22glasses%22%3A%5B%5D%2C%22hair%22%3A%5B%5D%2C%22player_id%22%3A187817894%2C%22last_activity%22%3A%222021-03-04+00%3A06%3A41%22%2C%22gloves%22%3A%5B%5D%2C%22first_time%22%3A0%2C%22hat%22%3A%5B%5D%2C%22cash%22%3A15%2C%22energy%22%3A100%2C%22nose%22%3A%5B%5D%2C%22last_login%22%3A%222021-03-04+01%3A16%3A09%22%2C%22socks%22%3A%5B%5D%2C%22jacket%22%3A%5B%5D%2C%22bracelet%22%3A%5B%5D%2C%22necklace%22%3A%5B%5D%2C%22shoes%22%3A%5B%5D%2C%22badge%22%3A2%2C%22face%22%3A%5B%5D%2C%22ears%22%3A%5B%5D%2C%22facialhair%22%3A%5B%5D%2C%22mouth%22%3A%5B%5D%2C%22shirt%22%3A%5B%5D%2C%22money%22%3A962739%2C%22created_on%22%3A%222020-06-18+17%3A17%3A10%22%2C%22eyebrows%22%3A%5B%5D%2C%22following_pet%22%3A0%2C%22name%22%3A%22zen%22%2C%22online%22%3A1%2C%22user%22%3A185245280%2C%22earrings%22%3A%5B%5D%2C%22purse%22%3A%5B%5D%7D%7D",
+							"facebookJSON": "%7B%22fb_source%22%3A%22bookmark%22%2C%22fb_sig_user%22%3A%22107327461025802%22%2C%22snapi_auth%22%3A%22185245280%3A%3A19a4bf39d5ab8fa0cc3c3f12c12e28e2%22%7D",
+							"defaultServer": "server101",
+							"defaultInstance": "101004",
+							"servers": "%7B%22server102%22%3A%7B%22ip%22%3A%22127.0.0.1%22%2C%22port%22%3A%229346%22%2C%22users%22%3A%22376%22%7D%2C%22server103%22%3A%7B%22ip%22%3A%22127.0.0.1%22%2C%22port%22%3A%229347%22%2C%22users%22%3A%22387%22%7D%2C%22server104%22%3A%7B%22ip%22%3A%22127.0.0.1%22%2C%22port%22%3A%229348%22%2C%22users%22%3A%22394%22%7D%2C%22server105%22%3A%7B%22ip%22%3A%22127.0.0.1%22%2C%22port%22%3A%229349%22%2C%22users%22%3A%22394%22%7D%2C%22server101%22%3A%7B%22ip%22%3A%22127.0.0.1%22%2C%22port%22%3A%229345%22%2C%22users%22%3A%22558%22%7D%7D",
+							"uname": "Avery",
+							"ufullname": "Avery+King",
+							"ulastname": "King",
+							"ugender": "1",
+							"onCanvas": "1",
+							"platformId": "0",
+							"permissionsJSON": "",
+							"xid": "",
+							"lastLogin": "1614820569",
+							"loginCount": "",
+							"yo_t": "foo",
+							"yo_u": "187817894",
+							"playerId": "187817894",
+							"snapi_auth": "",
+							"secondsIntoGameNps": "90",
+							"secondsMinIdleNps": "30",
+							"mysteryCrateFrequency": "1",
+							"popUpStartTime": "1307367815",
+							"popUpEndTime": "1307460600",
+							"firstLogin": "0",
+							"bulkOpenItemLimit": "100",
+							"inRoomStores": "%5B%7B%22id%22%3A1001%2C%22name%22%3A%22The+Furniture+Store%22%7D%2C%7B%22id%22%3A1010%2C%22name%22%3A%22YoDepot%22%7D%2C%7B%22id%22%3A1008%2C%22name%22%3A%22Gifts+and+Flowers%22%7D%2C%7B%22id%22%3A1014%2C%22name%22%3A%22The+Pet+Shelter%22%7D%5D",
+							"settingmask": "0",
+							"initEmailPrompt": "1",
+							"items_promo": "1",
+							"hasFBPublishPermission": "",
+							"askFBPublishPermission": "1",
+							"hasPhotoPermission": "0",
+							"collections_splash": "1",
+							"v2events": "true",
+							"static_base_url": "https%3A%2F%2Fyw-web.yoworld.com%2F%2Fcdn%2F",
+							"psh": "db85176bce4f361a21c86c2a9c19c511",
+							"av": "9908",
+							"versionMinor": "9908",
+							"FB_APPID": "21526880407",
+							"APPLICATION_FACEBOOK_URI": "https%3A%2F%2Fapps.facebook.com%2Fplayyoworld",
+							"default_room": "",
+							"popups_enabled": "1",
+							"preferences": "%5B%7B%22key%22%3A%227743%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227771%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227822%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227866%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227898%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227899%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227908%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227910%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227915%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227916%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227922%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227923%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227924%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227925%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227926%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227927%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227964%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227976%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227990%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227992%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%227995%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228000%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228005%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228012%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228024%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228028%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228031%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228038%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228044%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228048%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228060%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228061%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228064%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228068%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228072%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228074%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228077%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228078%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228080%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228082%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228084%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228087%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228088%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228093%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228094%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228095%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228102%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228105%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228106%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228111%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228119%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228125%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228126%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228132%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228138%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228144%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228149%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228150%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228155%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228160%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228162%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228171%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228176%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228177%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228178%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228179%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228182%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228189%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228190%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228194%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228213%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228227%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228241%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228253%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228274%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228281%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228283%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228289%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228294%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228295%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228296%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228302%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228306%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228307%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228315%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228321%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228324%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228328%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228329%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228335%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228340%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228347%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228351%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228352%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228353%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228358%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228368%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228369%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228372%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228381%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228384%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228395%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228396%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228400%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228414%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228416%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228421%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228422%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228423%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228426%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228427%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228429%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228432%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228433%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228435%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228439%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228442%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228444%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228446%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228455%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228457%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228463%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228464%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228467%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228469%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228475%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228476%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228484%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228485%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228490%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228494%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228497%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228499%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228500%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228517%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228521%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228532%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228533%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228537%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228543%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228550%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228557%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228558%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228565%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228575%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228579%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228582%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228585%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228591%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228592%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228593%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228600%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228617%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228621%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228626%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228631%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228645%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228651%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228654%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228656%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228691%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228703%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228708%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228711%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228713%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228721%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228724%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228728%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228732%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228734%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228738%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228739%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228742%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228743%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228746%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228751%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228752%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228753%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228754%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228756%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228757%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228758%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228759%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228763%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228767%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228771%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228774%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228781%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228785%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228787%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228789%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228790%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228791%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228793%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228796%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228798%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228800%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228801%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228806%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228807%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228808%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228816%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228817%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228818%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228820%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228821%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228822%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228823%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228826%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228832%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228834%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228837%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228847%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228851%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228859%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228870%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228873%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228879%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228881%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228893%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228896%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228897%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228899%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228901%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228902%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228907%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228909%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228911%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228912%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228915%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228919%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228922%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228927%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228931%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228937%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228940%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228944%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228959%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228960%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228962%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228975%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228976%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228981%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228991%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228994%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%228996%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229000%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229001%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229003%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229016%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229019%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229020%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229022%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229029%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229035%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229037%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229038%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229045%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229048%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229049%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229050%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229052%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229053%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229054%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229059%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229065%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229068%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229069%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229070%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229071%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229074%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229080%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229086%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229092%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229094%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229097%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229100%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229101%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229102%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229116%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229121%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229122%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229127%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229144%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%229147%22%2C%22value%22%3A%221%22%7D%2C%7B%22key%22%3A%22canWorkDate%22%2C%22value%22%3A%221597875689293%22%7D%2C%7B%22key%22%3A%22hideOfflineBuddies%22%2C%22value%22%3A%22%5C%22true%5C%22%22%7D%2C%7B%22key%22%3A%22isMute%22%2C%22value%22%3A%22true%22%7D%2C%7B%22key%22%3A%22showNewDecorShop2.1%22%2C%22value%22%3A%22%5C%22false%5C%22%22%7D%2C%7B%22key%22%3A%22workHelpRequestExpires%22%2C%22value%22%3A%220%22%7D%5D",
+							"clientType": "FACEBOOK",
+							"browserVendor": "Firefox",
+						};
+
+			var search = window.location.search;
+			if (search) {
+				var split = search.trim().replace('?', '').split('&');
+				for (var splitIdx = 0; splitIdx < split.length; ++splitIdx) {
+					var item = split[splitIdx].split('=');
+					if (item.length !== 2) {
+						continue;
+					}
+
+					if (undefined === flashvars[item[0]]) {
+						flashvars[item[0]] = encodeURIComponent(item[1]);
+					}
+				}
+			}
+
+			var params = {
+				"allowScriptAccess": "always",
+				"allowFullScreen": "true",
+				"allowFullScreenInteractive": "true",
+				"wmode": "opaque",
+				"scale": "default"
+			};
+			var attributes = {};
+			function onEmbedGameSwfSuccess(event) {
+				var success = event.success;
+				var objectId = event.id;
+				var objectElement = event.ref;
+				// For use by the ad networks
+				gameSwf = event.ref;
+				if (objectElement && objectElement.style) {
+					objectElement.style.zoom = "100%";
+				}
+				if (success) {
+					console.debug("Successfully embedded " + objectId, objectElement);
+				} else {
+					console.debug("Failed embed for " + objectId, objectElement);
+					$("#game_swf_loading").css("display", "none");
+					$("#game_swf_div").css("transition", "none").addClass("loaded");
+				}
+			};
+			var SWF_URL = "https://yw-web.yoworld.com/flash/bin-debug/YoVilleApp.js?v=2710";
+			var DIV_NAME = "game_swf_div";
+			var WIDTH = 760;
+			var HEIGHT = 868;
+			var MINIMUM_FLASH_VERSION = "11.1";
+			var EXPRESS_INSTALL_URL = "/expressInstall.swf";
+
+			swfobject.embedSWF(
+				SWF_URL,
+				DIV_NAME,
+				WIDTH,
+				HEIGHT,
+				MINIMUM_FLASH_VERSION,
+				EXPRESS_INSTALL_URL,
+				flashvars,
+				params,
+				attributes,
+				onEmbedGameSwfSuccess
+			);
+			
+			(function(module) {
+				var loaded = false;
+				var listeners = [];
+				function waitForFlash(callback) {
+					if (loaded) {
+						setTimeout(callback, 0);
+						return;
+					}
+					listeners.push(callback);
+				};
+				function onFlashLoaded() {
+					if (loaded) {
+						console.warn("Flash loaded twice?");
+					}
+					loaded = true;
+					while (listeners.length) {
+						listeners.pop()();
+					}
+				};
+				module.YoWorldBootstrap = {
+					waitForFlash: waitForFlash
+				};
+				// Callback response
+				module.talkToJS = function jsNotReady(callbackId, data) {
+					console.error("Javascript is not ready for messages!", callbackId, data);
+				};
+				var messageQueue = [];
+				// Flash initiated events
+				module.dispatchFlashEvent = function jsNotReady(eventName, params) {
+					messageQueue.push({
+						eventName: eventName,
+						params: params
+					});
+				};
+				// Use this to register a new handler.  It handles queueing.
+				module.registerFlashEventHander = function registerFlashEventHander(handler) {
+					module.dispatchFlashEvent = handler;
+					while (messageQueue.length) {
+						var message = messageQueue.pop();
+						handler(message.eventName, message.params);
+					}
+				};
+				module.flashDone = onFlashLoaded;
+			})(window);
+			!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+			require.config({
+			  waitSeconds: 60,
+			  urlArgs: "cacheBust=" + Date.now(),
+			  baseUrl: "js/",
+			  paths: {
+				"facebook": "//connect.facebook.net/en_US/sdk",
+				"jquery": "../support/jquery.min",
+			  }
+			});
+			window.MESSAGES = [
+						];
+			window.MODAL_MESSAGES = [
+						];
+
+			require.config({
+				waitSeconds: 60,
+				urlArgs: "cacheBust=" + Date.now(),
+				paths: {
+					"relayClient": "/dist/RelayClient"
+				}
+			});
+
+			require(["facebook"], function loadAppAfterFacebook(fb) {
+				var ywApp;
+				var gaInstance;
+				require.config({
+					waitSeconds: 60,
+					urlArgs: "cacheBust=" + Date.now(),
+					paths: {
+						"mainApp": "/dist/YoWorldApp",
+						"googleAnalytics": "/dist/GoogleAnalytics",
+						"CommonDependencies": "/dist/CommonDependencies.dll"
+					}
+				});
+
+				require(["googleAnalytics"], function setupGA(GoogleAnalytics){
+						var localGA = new GoogleAnalytics(GA_TRACKING_ID, GA_HOSTNAME);
+						if(ywApp !== undefined) {
+							ywApp.__ga = localGA;
+						}
+						gaInstance = localGA;
+
+					}, function printError() {
+					console.error("Failed to load GoogleAnalytics, this is most likely due to an AdBlocker");
+				});
+
+				require(["relayClient"], function connectRelayClient(RelayClient) {
+					
+					require(["mainApp"], function createApp(YoWorldApp) {
+						ywApp = new YoWorldApp(FB_APP_ID, FB_CHANNEL_URL, "185245280::19a4bf39d5ab8fa0cc3c3f12c12e28e2", "187817894", isInsideAppStream);
+						if(gaInstance !== undefined) {
+							ywApp.__ga = gaInstance;
+						}
+					});
+				});
+			});
+		</script>
+
+
+	<!-- Slots -->
+	<div id="slotContainerOuter" class="popup popup--default" style="position:absolute;top: 20px; z-index:9999;display:none;height:591px;width:1050px">
+	<img id="btnSlotsClose" class="js-close  close_button" src="images/close_x.png">
+	<div id="slotContainer" class="main popup__main" style="top:40px;"></div>
+	</div>
+	</div>
+
+	<script type="text/javascript">
+		/**
+		* Launch slots
+		* @param {String} game 
+		* @param {String} currencyType
+		* @param {Boolean} soundOn
+		*/
+		function launchSlots(game, currencyType, soundOn) {
+			window.showBlockingModal();
+
+			var slotsOuterDiv = document.getElementById("slotContainerOuter");
+
+			var dialogFrameHeight = 72;
+			var defaultHeight = 591;
+			var customHeightsByGame = {
+				'castles':840
+			}
+
+			var containerHeight = customHeightsByGame[game] == null ? defaultHeight : customHeightsByGame[game];
+			slotsOuterDiv.style.height = containerHeight + 'px';
+			slotsOuterDiv.style.display = 'block';
+
+			var slotsDiv = document.getElementById("slotContainer");
+			var slotsFrame = document.createElement("iframe");
+
+			var sound = soundOn ? '1' : '0';
+			var snapiAuth = "185245280::19a4bf39d5ab8fa0cc3c3f12c12e28e2";
+			var firstParamDelimiter = SLOTS_TGC_URL.indexOf("?") === -1 ? "?" : "&";
+			var slotsUrl = SLOTS_TGC_URL + firstParamDelimiter + "game="+game+"&language=en&token="+snapiAuth+"&mode=real&ccy="+currencyType+"&interface=bvg-wallet&variant=standard&version=stable&currencytype="+currencyType+"&sound="+sound;
+			slotsFrame.setAttribute("width", "1024px");
+			slotsFrame.setAttribute("height", (containerHeight - dialogFrameHeight)+'px');
+			slotsFrame.setAttribute("id", "slots_frame");
+			slotsFrame.setAttribute("src", slotsUrl);
+			slotsFrame.setAttribute("frameborder", 0);
+			slotsDiv.appendChild(slotsFrame);
+
+
+			/**
+			* Handle window message
+			* @param events
+			*/
+			function handleWindowMessage(events) { 
+				// notified when slot spin has completed
+				if(events.data.type == "resultShown" && events.data.details.complete) {
+					var swfObject = document.querySelector("#game_swf_div");
+					swfObject.talkToFlash(JSON.stringify({type:'claimPendingSlotsRewardItems'}));
+				}
+
+				if(events.data.type == "deposit" ) {
+					closeSlotsWindow();
+					triggerPurchasePopup();
+				}
+			}
+
+			/**
+			* Close slots window
+			*/
+			function closeSlotsWindow() {
+				closeImg.removeEventListener("click", closeSlotsWindow);
+				window.hideBlockingModal();
+				slotsDiv.innerHTML = "";
+				slotsOuterDiv.style.display = 'none';
+				// trigger balance update
+				var swfObject = document.querySelector("#game_swf_div");
+				swfObject.talkToFlash(JSON.stringify({type:'currencyUpdate'}));
+				window.removeEventListener('message', handleWindowMessage);
+			}
+
+			window.addEventListener('message', handleWindowMessage);
+
+
+			var closeImg = document.getElementById("btnSlotsClose");
+			closeImg.addEventListener("click", closeSlotsWindow);
+		}
+	</script>
+	
+	<script type="text/javascript">
+/**
+ * This file provides an interface for loading files that works on both the regular game and
+ * inside of appstream with consistency between the two
+ */
+
+
+
+    var filePickLocal = function filePickLocal(onData, accept) {
+        var input = document.createElement("input");
+        document.body.appendChild(input);
+        input.style = 'visibility: hidden;';
+        input.type = 'file';
+        if (accept) {
+            input.accept = accept;
+        }
+        input.addEventListener('change', function onFileSelected () {
+            var file = input.files[0];
+            var reader = new FileReader();
+            reader.onload = function () {
+                document.body.removeChild(input);
+                onData(reader.result, file.name);
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+            reader.readAsDataURL(file);
+        });
+        input.click();
+    }
+
+    /**
+     * Prompts the user to load a file
+     * onData: callback with b64 encoded data + file name once the user selects a file.  If no file is selected then this is never called
+     * accept: the types of files that are accepted.  The same value as the accept attribute on an html <input> element
+     */
+    function filePickB64(onData, accept) {
+                    filePickLocal(onData, accept);
+            }
+
+    /**
+     * Prompts the user to load a file
+     * onData: callback with a file once the user selects a file.  If no file is selected then this is never called
+     * accept: the types of files that are accepted.  The same value as the accept attribute on an html <input> element
+     */
+    function filePick(onFile, accept) {
+        filePickB64(function convertFromB64(b64data, name) {
+            var tokens = b64data.split(';base64,');
+
+            var type = tokens[0].replace(/^data:/, '');
+            
+            var bytes = atob(tokens[1]);
+            var byteLength = bytes.length
+            var buffer = new Uint8Array(byteLength);
+            for (var idx = 0; idx < byteLength; ++idx) {
+                buffer[idx] = bytes.charCodeAt(idx);
+            }
+            
+            var file = new File([buffer], name, { type });
+            onFile(file);
+        }, accept);
+    }
+
+    
+    // this ensures we can't directly call the local function
+    delete filePickLocal;
+
+</script>
+	<div id="mainAdContainer" style="position: absolute; z-index: 9999; left:50%; top:100px">
+	<div id="innerAdContainer" style="position:relative; left:-50%">
+				<div id="brokenAdLink" class="hidden report-ad__link">
+			<a href="javascript:;">Report a problem</a>
+		</div>
+
+<script type="text/javascript">
+	require.config({
+		waitSeconds: 60,
+		urlArgs: "cacheBust=" + Date.now(),
+		paths: {
+			"IronRV":"https://static.ultra-rv.com/rv-min"
+		}
+	});
+
+	require(["IronRV"], function setupIronsource(IronRV) {
+			var ironSourceRV = IronRV.getInstance({
+			applicationKey		: "47dfe31d",
+			applicationUserId	: "187817894"
+		});
+
+		ironSourceRV.addListener(IronRV.EVENTS.READY, ironRvEventReady);
+		ironSourceRV.addListener(IronRV.EVENTS.OPEN, ironRvEventOpen);
+		ironSourceRV.addListener(IronRV.EVENTS.CLOSE, ironRvEventClose);
+		ironSourceRV.addListener(IronRV.EVENTS.NO_CAMPAIGNS, ironRvEventNoCampaigns);
+		ironSourceRV.addListener(IronRV.EVENTS.COMPLETION, ironRvEventCompletion);
+		window.ironSourcePlayVideo = ironSourcePlayVideo;
+		window.ironSourceCheckForAds = ironSourceCheckForAds;
+
+		/**
+		 * Called when the offers are ready
+		 */
+		function ironRvEventReady() {
+			ironSourceTellSwfAdAvailability();
+		}
+
+		/**
+		 * Will be fired upon engagement open
+		 */
+		function ironRvEventOpen() {
+			var container = $('.ironrv-container');
+			container.css('top','120px');
+
+			//We have our own overlay
+			$(".ironrv-bg").addClass("hidden");
+		}
+
+		/**
+		 * Stops and closes the ad.
+		 */
+		function ironRvEventClose() {
+			if (typeof gameSwf !== 'undefined' && gameSwf.ironSourceAdComplete) {
+				gameSwf.ironSourceAdComplete(false);
+			}
+			ironSourceCloseAd();
+		}
+
+		/**
+		 * Fired when user has completed all offers in the current session.
+		 */
+		function ironRvEventNoCampaigns() {
+			ironSourceTellSwfAdAvailability();
+		}
+
+		/**
+		 * Fired when the user completed the offer. 
+		 * Use this event to gain information on the amount 
+		 * of rewards and award the user accordingly.
+		 */
+		function ironRvEventCompletion() {
+			if (typeof gameSwf !== 'undefined' && gameSwf.ironSourceAdComplete) {
+				gameSwf.ironSourceAdComplete(true);
+			}
+			ironSourceCloseAd();
+		}
+
+		/**
+		 * Called by the swf to check for ad availablilty
+		 */
+		function ironSourceCheckForAds() {
+			ironSourceTellSwfAdAvailability();
+		}
+
+		/**
+		 * Play/show an IronSource ad video
+		 */
+		function ironSourcePlayVideo() {
+			window.showAdBlockingModal(12, ironSourceCloseAd);
+			ironSourceRV.show();
+		}
+
+		/**
+		 * Stop/hide an IronSource ad video
+		 */
+		function ironSourceCloseAd() {
+			ironSourceRV.hide();
+			window.hideAdBlockingModal();
+			var closeButton = $('#ssaInterstitialClose');
+			if(closeButton != null){
+				closeButton.click();
+			}
+		}
+
+		/**
+		 * Tells the swf the ad availability for ironsource
+		 */
+		function ironSourceTellSwfAdAvailability() {
+			if (gameSwf && gameSwf.ironSourceAdsAvailable) {
+				if(ironSourceRV){
+					gameSwf.ironSourceAdsAvailable(ironSourceRV.isReady());
+				}
+			}
+		}
+		}, 
+	function printError() {
+		console.error("Failed to load Ironsource");
+	});
+</script>
+
+
+
+	<div id="applixir_vanishing_div" hidden>
+		<iframe id="applixir_parent" allow="autoplay"></iframe>
+	</div>
+
+	<script type='text/javascript' src="https://cdn.applixir.com/applixir.sdk3.0m.js"></script>
+	<script type="text/javascript">
+
+		const applixirAdCoolDown = 120000; // 2 min
+		const applixirFbAdCoolDown = 600000; // 10 min
+		const applixirLastAdTimeKey = "applixirLastAdTime";
+		const applixirWatchedFbAdKey = "applixirWatchedFbAd";
+
+		var applixirAdWatched = false;
+		var applixirFbAdWatched = false;
+		var applixirAdsUnavailable = false;
+
+		var applixirOptions = {
+			zoneId: 2701,
+			devId: 2309,
+			gameId: 4735,
+			custom1: 187817894,
+			custom2: 187817894,
+			fallback: 1,
+			dMode: 2,
+			vpos: 'top',
+			z2url: 'https://yw-web.yoworld.com/gamecontrol/ad_videos/applixir_z2.php',
+			adStatusCb: applixirAdStatusHandler       
+		};
+
+		// Listen for event from the popup window, the event data will start with "applixir-"
+		window.addEventListener('message', function initZ2(event) {
+			if (event.origin !== "https://yw-web.yoworld.com") {
+				return;
+			} 
+
+			if (!event.data.startsWith("applixir-")) {
+				return;
+			}
+
+			var status = event.data.substr("applixir-".length);
+
+			if (status == 'z2-ready') {
+				var options2 = {
+					zoneId: 2701,
+					devId: 2309,
+					gameId: 4735,
+					custom1: 187817894,
+					custom2: 187817894,
+					fallback: 1,
+					dMode: 2,
+					vtos: 2,
+					htos: 3,
+				}
+				event.source.postMessage("loadOptions=" + JSON.stringify(options2), "https://yw-web.yoworld.com");
+				return;
+			}
+
+			applixirAdStatusHandler(status);
+		}, false);
+
+		/**
+		 * Applixir doesn't let you check for ads, so let's just see if the js loaded.
+		 * We only let you watch one ad per 2 min since there is a 1 ad per min limit 
+		 * before applixir will block you
+		 */
+		function applixirCheckForAds() {
+			var applixirLastAdTime = localStorage.getItem(applixirLastAdTimeKey) || 0;
+			var coolDownTime = localStorage.getItem(applixirWatchedFbAdKey) ? applixirFbAdCoolDown : applixirAdCoolDown;
+			gameSwf.applixirNetworkAvailable(Date.now() - applixirLastAdTime > coolDownTime && !applixirAdsUnavailable);
+		}
+
+		/**
+		 * Shows an Applixir video ad
+		 */
+		function applixirPlayVideo() {
+			applixirAdWatched = false;
+			applixirFbAdWatched = false;
+			window.showAdBlockingModal(3, hideApplixir);
+			invokeApplixirVideoUnit(applixirOptions);
+
+			// Incase we don't close properly
+			localStorage.setItem(applixirLastAdTimeKey, Date.now());
+			localStorage.setItem(applixirWatchedFbAdKey, true);
+
+			gameSwf.applixirNetworkAvailable(false);
+		}
+
+		/**
+		 * Callback from applixir with the status 
+		 * of the ad that's currently playing
+		 * @param {String} status
+		 */
+		function applixirAdStatusHandler(status) {
+			if (status === 'ad-watched') {
+				applixirAdWatched = true;
+				applixirFbAdWatched = false;
+			} else if (status === 'fb-watched') {
+				applixirAdWatched = true;
+				applixirFbAdWatched = true;
+			} else if (status === 'ads-unavailable') {
+				applixirAdsUnavailable = true;
+				gameSwf.applixirNetworkAvailable(false);
+			} else if (status === 'sys-closing') {
+				applixirOnVideoClosed(applixirAdWatched, applixirFbAdWatched);
+			}
+		}
+
+		/**
+		 * Called when the Applixir ad is closed. Either by the player
+		 * finishing the video or closing the video early.
+		 * @param {Boolean} videoCompleted
+		 * @param {Boolean} fbAdWatched if a fallback ad was watched
+		 */
+		function applixirOnVideoClosed(videoCompleted, fbAdWatched) {
+			localStorage.setItem(applixirLastAdTimeKey, Date.now());
+			localStorage.setItem(applixirWatchedFbAdKey, fbAdWatched);
+			gameSwf.applixirOnVideoClosed(videoCompleted);
+			hideApplixir();
+		}
+
+		/**
+		 * Hides the ad
+		 */
+		function hideApplixir() {
+			var hyprDiv = document.getElementById("applixir_vanishing_div");
+			hyprDiv.setAttribute("hidden", "");
+			window.hideAdBlockingModal();
+		}
+
+	</script>
+
+	<div id="truexAdContainer"></div>
+	<script type='text/javascript' src='//static.truex.com/js/client.js'></script>
+	<script type="text/javascript">
+
+		var trueXClient = null;
+		var trueXActivity = null;
+
+		var options = {
+			'network_user_id':'187817894',
+			'partner_config_hash':'f36118c71a996fd53537f3f05e533291f0f85b6f'
+		};
+
+		//Check if the load failed. This is likely due to an ad blocker.
+		//If TrueX fails to load then the client will never call upon TrueX
+		//to play a video ad.
+		if(typeof truex !== 'undefined'){
+			truex.client(options, function(client) {
+				trueXClient = client;
+				trueXClient.requestActivity(trueXActivityLoaded);
+			});
+		}
+
+		/**
+		 * Called when the activity object is loaded. Setup
+		 * the callbacks for activity responses from TrueX
+		 * @param {Object} activity
+		 */
+		function trueXActivityLoaded(activity) {
+			trueXActivity = null;
+			if(activity){
+				trueXActivity = activity;
+				trueXActivity.onStart(trueXOnStartCallback);
+				trueXActivity.onFinish(trueXOnFinishCallback);
+				trueXActivity.onCredit(trueXOnCreditCallback);
+				trueXActivity.onClose(trueXOnCloseCallback);
+			}
+			trueXCheckForAds();
+		}
+
+		/**
+		 * Check if there is any inventory for the user to consume.
+		 */
+		function trueXCheckForAds() {
+			if(gameSwf && gameSwf.trueXAdsAvailable !== undefined) {
+				gameSwf.trueXAdsAvailable((trueXActivity) ? true : false);
+			}
+		}
+
+		/**
+		 * Called when the user chooses to watch an ad. Calls
+		 * to setup and load the ad.
+		 */
+		function trueXPlayVideo() {
+			if(trueXClient && trueXActivity) {
+				window.showAdBlockingModal(4, trueXHideAd);
+				trueXClient.loadActivityIntoContainer(trueXActivity, "truexAdContainer", {});
+			}
+		}
+
+		/**
+		 * Called when the ad is fully loaded and starting to play.
+		 * @param {Object} activity
+		 */
+		function trueXOnStartCallback(activity) {
+		}
+
+		/**
+		 * Point in the ad when the user is credited for 
+		 * completing the interaction.
+		 * @param {Object} engagement
+		 */
+		function trueXOnCreditCallback(engagement) {
+			gameSwf.trueXCreditUser(engagement);
+		}
+
+		/**
+		 * Called when the user has chosen to close the ad. 
+		 * The credit call usually happens before this point
+		 * and the close call happens after.
+		 * @param {Object} activity
+		 */
+		function trueXOnFinishCallback(activity) {
+			trueXHideAd();
+		}
+
+		/**
+		 * Called when the ad is closed.
+		 * @param {Object} activity
+		 */
+		function trueXOnCloseCallback(activity) {
+			trueXHideAd();
+			trueXActivity = null;
+			trueXClient.requestActivity(trueXActivityLoaded);
+		}
+
+		/**
+		 * Hides the ad. Need to remove leftovers from advertisement.
+		 */
+		function trueXHideAd(){
+			window.hideAdBlockingModal();
+			var adDiv = document.getElementById("truexAdContainer");
+			if(adDiv) {
+				adDiv.style.zIndex = -9999;
+				while (adDiv.firstChild) {
+					adDiv.removeChild(adDiv.firstChild);
+				}
+			}
+		}
+
+	</script>
+
+<!-- Add the ad div when you want to show an ad. -->
+	<div id="hyprAdContainer"></div>
+	<script type="text/javascript">
+		var hyprHasOffersAvailable = false;
+
+		/**
+		 * Called from HyprMX when they determine if there is available inventory
+		 * @param {int} availableOffer - 1 if there is an offer available. 0 otherwise
+		 */
+		function hyprOffersAvailable(availableOffer) {
+			hyprHasOffersAvailable = (availableOffer == 1);
+		}
+
+		/**
+		 * Called from flash to see if ads are available.
+		 */
+		function hyprCheckForAds() {
+			gameSwf.hyprAdsAvailable(hyprHasOffersAvailable);
+		}
+
+		/**
+		 * Called by a snipppet of code we host that Hypr can embed as a frame in their ad.
+		 * Allows us to signal ad completion
+		 */
+		window.triggerHyprAdComplete = function triggerHyprAdComplete() {
+			hideHypr();
+			gameSwf.hyprCreditUser(true);
+		}
+
+		/**
+		 * Close and hide the hypr ad.
+		 */
+		function hideHypr() {
+			var hyprDiv = document.getElementById("hyprAdContainer");
+			while(hyprDiv.firstChild) {
+				hyprDiv.removeChild(hyprDiv.firstChild);
+			}
+			window.hideAdBlockingModal();
+		}
+
+		/**
+		 * Show a HyprMX ad by creating the iframe in the right spot.
+		 */
+		function hyprPlayVideo() {
+			document.domain = "yw-web.yoworld.com";
+			window.showAdBlockingModal(6, this.hideHypr);
+			var hyprLink = "https://live.hyprmx.com/embedded_videos/player?uid=187817894&amp;site=YoWorld&amp;distributorid=9050506&amp;rewards[][max_quantity]=1000&amp;rewards[][reward_id]=0&amp;rewards[][title]=Coins&amp;rewards[][value_in_dollars]=0.01";
+			// sub_id is the unique identifier for the ad view.
+			// A spoofer could provide a different timestamp but would still need to watch the video before the server was notified.
+			hyprLink = hyprLink + "&sub_id=" + (new Date()).getTime();
+			var hyprDiv = document.getElementById("hyprAdContainer");
+			var adFrame = document.createElement("iframe");
+			adFrame.setAttribute("width", "800px");
+			adFrame.setAttribute("height", "540px");
+			adFrame.setAttribute("id", "hypr_frame");
+			adFrame.setAttribute("src", hyprLink);
+			adFrame.setAttribute("frameborder", 0);
+			adFrame.setAttribute("ALLOWTRANSPARENCY", "true");
+			hyprDiv.appendChild(adFrame);
+		}
+	</script>
+	<script async src="https://live.hyprmx.com/embedded_videos/videos_available_jsonp?uid=187817894&amp;distributorid=9050506&jsonp=hyprOffersAvailable" ></script>
+
+<!-- Add the ad div when you want to show an ad. -->
+	<div id="lifeStreetHTAdContainer"></div>
+	<script src="//ads.lfstmedia.com/getad?site=290007" type="text/javascript"></script>
+	<script type="text/javascript">
+		var lifeStreetHTAdsAvailable = false;
+		var lifeStreetHTRewarded = false;
+		var lifeStreetHTSlot;
+		lifeStreetHTLoadSlot();
+
+		/**
+		 * Initialize the LifeStreet ad slot.
+		 */
+		function lifeStreetHTLoadSlot() {
+			lifeStreetHTSlot = (typeof LSM_Slot === 'undefined') ? null : LSM_Slot({
+				adkey: 'e06',
+				ad_size: '650x520',
+				slot: 'slot181075',
+				_ad_type: 'vast_banner',
+				user_id: '187817894',
+				_render_div_id: 'lifeStreetHTAdContainer',
+				_onnobid: lifeStreetHTNoAds,
+				_preload: 'wait',
+				_onload: lifeStreetHTOnLoad,
+				_onaction: lifeStreetHTOnAction,
+				_onhide: lifeStreetHTOnHidden
+			});
+		}
+
+		/**
+		 * There are no life street ads available.
+		 */
+		function lifeStreetHTNoAds() {
+			lifeStreetHTAdsAvailable = false;
+			lifeStreetHTCheckForAds();
+		}
+
+		/**
+		 * Life Street has loaded.
+		 * @param {Object} slot
+		 */
+		function lifeStreetHTOnLoad(slot) {
+			lifeStreetHTAdsAvailable = (slot.state() !== 'error');
+			lifeStreetHTCheckForAds();
+		}
+
+		/**
+		 * A Life Street action has happened.
+		 * @param {Object} slot
+		 * @param {String} action
+		 */
+		function lifeStreetHTOnAction(slot, action) {
+			if (action == 'get_reward') {
+				lifeStreetHTRewarded = true;
+			}
+		}
+
+
+		/**
+		 * Clean up and hide the life street ad.
+		 */
+		function hideLifeStreetHTAd() {
+			// Calling lifeStreetHTSlot.hide() only hides the
+			// ad and it continues to play. Can't seem to call
+			// both hide() and destroy().
+			lifeStreetHTSlot.destroy();
+			document.getElementById("lifeStreetHTAdContainer").innerHTML = "";
+			lifeStreetHTOnHidden();
+		}
+
+		/**
+		 * Called when life street ad is closed. This is called
+		 * when the ad is naturally closed or after we force close.
+		 */
+		function lifeStreetHTOnHidden() {
+			gameSwf.lifeStreetHTCreditUser(lifeStreetHTRewarded);
+			window.hideAdBlockingModal();
+
+			lifeStreetHTLoadSlot();
+		}
+
+		/**
+		 * Called from flash to see if ads are available.
+		 */
+		function lifeStreetHTCheckForAds() {
+			if(gameSwf && gameSwf.lifeStreetHTAdsAvailable){
+				gameSwf.lifeStreetHTAdsAvailable(lifeStreetHTAdsAvailable);
+			}
+		}
+
+		/**
+		 * Show the lifestreet ad.
+		 */
+		function lifeStreetHTPlayVideo() {
+			lifeStreetHTAdsAvailable = false;
+			lifeStreetHTRewarded = false;
+			window.showAdBlockingModal(9, hideLifeStreetHTAd);
+			lifeStreetHTSlot.show();
+		}
+
+	</script>
+
+<!-- Add the ad div when you want to show an ad. -->
+	<div id="lifeStreetMTAdContainer"></div>
+	<script src="//ads.lfstmedia.com/getad?site=290007" type="text/javascript"></script>
+	<script type="text/javascript">
+		var lifeStreetMTAdsAvailable = false;
+		var lifeStreetMTRewarded = false;
+		var lifeStreetMTSlot;
+		lifeStreetMTLoadSlot();
+
+		/**
+		 * Initialize the LifeStreet ad slot.
+		 */
+		function lifeStreetMTLoadSlot() {
+			lifeStreetMTSlot = (typeof LSM_Slot === 'undefined') ? null : LSM_Slot({
+				adkey: '389',
+				ad_size: '650x520',
+				slot: 'slot183251',
+				_ad_type: 'vast_banner',
+				user_id: '187817894',
+				_render_div_id: 'lifeStreetMTAdContainer',
+				_onnobid: lifeStreetMTNoAds,
+				_preload: 'wait',
+				_onload: lifeStreetMTOnLoad,
+				_onaction: lifeStreetMTOnAction,
+				_onhide: lifeStreetMTOnHidden
+			});
+		}
+
+		/**
+		 * There are no life street ads available.
+		 */
+		function lifeStreetMTNoAds() {
+			lifeStreetMTAdsAvailable = false;
+			lifeStreetMTCheckForAds();
+		}
+
+		/**
+		 * Life Street has loaded.
+		 * @param {Object} slot
+		 */
+		function lifeStreetMTOnLoad(slot) {
+			lifeStreetMTAdsAvailable = (slot.state() !== 'error');
+			lifeStreetMTCheckForAds();
+		}
+
+		/**
+		 * A Life Street action has happened.
+		 * @param {Object} slot
+		 * @param {String} action
+		 */
+		function lifeStreetMTOnAction(slot, action) {
+			if (action == 'get_reward') {
+				lifeStreetMTRewarded = true;
+			}
+		}
+
+
+		/**
+		 * Clean up and hide the life street ad.
+		 */
+		function hideLifeStreetMTAd() {
+			// Calling lifeStreetMTSlot.hide() only hides the
+			// ad and it continues to play. Can't seem to call
+			// both hide() and destroy().
+			lifeStreetMTSlot.destroy();
+			document.getElementById("lifeStreetMTAdContainer").innerHTML = "";
+			lifeStreetMTOnHidden();
+		}
+
+		/**
+		 * Called when life street ad is closed. This is called
+		 * when the ad is naturally closed or after we force close.
+		 */
+		function lifeStreetMTOnHidden() {
+			gameSwf.lifeStreetMTCreditUser(lifeStreetMTRewarded);
+			window.hideAdBlockingModal();
+
+			lifeStreetMTLoadSlot();
+		}
+
+		/**
+		 * Called from flash to see if ads are available.
+		 */
+		function lifeStreetMTCheckForAds() {
+			if(gameSwf && gameSwf.lifeStreetMTAdsAvailable){
+				gameSwf.lifeStreetMTAdsAvailable(lifeStreetMTAdsAvailable);
+			}
+		}
+
+		/**
+		 * Show the lifestreet ad.
+		 */
+		function lifeStreetMTPlayVideo() {
+			lifeStreetMTAdsAvailable = false;
+			lifeStreetMTRewarded = false;
+			window.showAdBlockingModal(11, hideLifeStreetMTAd);
+			lifeStreetMTSlot.show();
+		}
+
+	</script>
+
+<!-- Add the ad div when you want to show an ad. -->
+	<div id="lifeStreetLTAdContainer"></div>
+	<script src="//ads.lfstmedia.com/getad?site=290007" type="text/javascript"></script>
+	<script type="text/javascript">
+		var lifeStreetLTAdsAvailable = false;
+		var lifeStreetLTRewarded = false;
+		var lifeStreetLTSlot;
+		lifeStreetLTLoadSlot();
+
+		/**
+		 * Initialize the LifeStreet ad slot.
+		 */
+		function lifeStreetLTLoadSlot() {
+			lifeStreetLTSlot = (typeof LSM_Slot === 'undefined') ? null : LSM_Slot({
+				adkey: '5d0',
+				ad_size: '650x520',
+				slot: 'slot181076',
+				_ad_type: 'vast_banner',
+				user_id: '187817894',
+				_render_div_id: 'lifeStreetLTAdContainer',
+				_onnobid: this.lifeStreetLTNoAds,
+				_preload: 'wait',
+				_onload: this.lifeStreetLTOnLoad,
+				_onaction: this.lifeStreetLTOnAction,
+				_onhide: this.lifeStreetLTOnHidden
+			});
+		}
+
+		/**
+		 * There are no life street ads available.
+		 */
+		function lifeStreetLTNoAds() {
+			lifeStreetLTAdsAvailable = false;
+			lifeStreetLTCheckForAds();
+		}
+
+		/**
+		 * Life Street has loaded.
+		 * @param {Object} slot
+		 */
+		function lifeStreetLTOnLoad(slot) {
+			lifeStreetLTAdsAvailable = slot.state() !== 'error';
+			lifeStreetLTCheckForAds();
+		}
+
+		/**
+		 * A Life Street action has happened.
+		 * @param {Object} slot
+		 * @param {String} action
+		 */
+		function lifeStreetLTOnAction(slot, action) {
+			if (action == 'get_reward') {
+				lifeStreetLTRewarded = true;
+			}
+		}
+
+		/**
+		 * Clean up and hide the life street ad.
+		 */
+		function hideLifeStreetLTAd() {
+			// Calling lifeStreetLTSlot.hide() only hides the
+			// ad and it continues to play. Can't seem to call
+			// both hide() and destroy().
+			lifeStreetLTSlot.destroy();
+			document.getElementById("lifeStreetLTAdContainer").innerHTML = "";
+			lifeStreetLTOnHidden();
+		}
+
+		/**
+		 * Called when life street ad is closed. This is called
+		 * when the ad is naturally closed or after we force close.
+		 */
+		function lifeStreetLTOnHidden() {
+			gameSwf.lifeStreetLTCreditUser(lifeStreetLTRewarded);
+			window.hideAdBlockingModal();
+
+			lifeStreetLTLoadSlot();
+		}
+
+		/**
+		 * Called from flash to see if ads are available.
+		 */
+		function lifeStreetLTCheckForAds() {
+			if(gameSwf && gameSwf.lifeStreetLTAdsAvailable){
+				gameSwf.lifeStreetLTAdsAvailable(lifeStreetLTAdsAvailable);
+			}
+		}
+
+		/**
+		 * Show the lifestreet ad.
+		 */
+		function lifeStreetLTPlayVideo() {
+			lifeStreetLTAdsAvailable = false;
+			lifeStreetLTRewarded = false;
+			window.showAdBlockingModal(10, hideLifeStreetLTAd);
+			lifeStreetLTSlot.show();
+		}
+
+	</script>
+	</div>
+</div>
+
+<div id="youTubeContainerOuter" class="popup popup--default" style="position:absolute;top: 100px; z-index:9999;display:none;height:550px">
+  <img id="btnYouTubeClose" class="js-close  close_button" src="images/close_x.png">
+  <div id="youTubeContainer" class="main popup__main" style="top:40px;"></div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	/**
+	 * Launch YouTube
+	 * @param {String} youTubeVideoId 
+	 */
+	function launchYouTube(youTubeVideoId) {
+		window.showBlockingModal();
+
+		var youTubeOuterDiv = document.getElementById("youTubeContainerOuter");
+		youTubeOuterDiv.style.display = 'block';
+
+		var youTubeDiv = document.getElementById("youTubeContainer");
+		var youTubeFrame = document.createElement("iframe");
+
+		youTubeFrame.setAttribute("width", "675px");
+		youTubeFrame.setAttribute("height", "456px");
+		youTubeFrame.setAttribute("id", "youtube_frame");
+		youTubeFrame.setAttribute("src", "//www.youtube.com/embed/"+youTubeVideoId+"?rel=0&autoplay=1&showinfo=0&controls=0");
+		youTubeFrame.setAttribute("frameborder", 0);
+		youTubeFrame.setAttribute("ALLOWTRANSPARENCY", "true");
+		youTubeFrame.setAttribute("allowfullscreen", "true");
+		youTubeDiv.appendChild(youTubeFrame);
+
+
+		/**
+		 * Close YouTube window
+		 */
+		function closeYouTubeWindow() {
+			closeImg.removeEventListener("click", closeYouTubeWindow);
+			youTubeOuterDiv.style.display = 'none';
+			window.hideBlockingModal();
+			youTubeDiv.innerHTML = "";
+		}
+
+		var closeImg = document.getElementById("btnYouTubeClose");
+		closeImg.addEventListener("click", closeYouTubeWindow);
+	}
+</script>
+
+	<!-- Ad blocker Scripts -->
+	<script type="text/javascript" >
+		/**
+		 * Set the adblock to true, if no ad blocker is running then adFrame.js will be
+		 * loaded and adblock will be set to false
+		 */
+		var adblock = true;
+
+		/**
+		 * Called by the client to determine if an ad blocker is been enabled
+		 */
+		function getAdBlockEnabled() {
+			if (gameSwf) {
+				gameSwf.setAdBlockEnabled(adblock);
+			}
+		}
+	</script>
+	<script type="text/javascript" charset="utf-8" src="js_deploy/support/adFrame.js"></script>
+
+
+	
+
+	<script type="text/javascript">
+
+		window.postRequest = function postRequest(resourceName, parameters, callback) {
+
+			callback = callback || function() {};
+
+			var method = "POST";
+			var path = resourceName;
+			var request = new XMLHttpRequest();
+			
+			function onLoad(event) {
+				var response;
+				try {
+					response = JSON.parse(request.responseText);
+				} catch (error) {
+					return callback(error);
+				}
+
+				return callback(undefined, response);
+			};
+
+			request.addEventListener("load", onLoad, false);
+			request.addEventListener("error", (event) => { return callback(event); }, false);
+			request.addEventListener("abort", (event) => { return callback(event); }, false);
+			if (typeof progressCallback === "function") {
+				request.addEventListener("progress", progressCallback, false);
+			}
+
+			var data = JSON.stringify(parameters || {});
+
+			if (path.indexOf("?") === -1) {
+				path += "?snapi_auth=" + parameters.snapiAuth;
+			} else {
+				path += "&snapi_auth=" + parameters.snapiAuth;
+			}
+
+			if (path.indexOf("?") === -1) {
+				path += "?authTok=" + parameters.authTok;
+			} else {
+				path += "&authTok=" + parameters.authTok;
+			}
+
+			request.open(method, path, true);
+
+			if (null === data) {
+				request.send();	
+			} else {
+				request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+				request.send(data);
+			}
+		}
+
+		window.getDataAndHideBadges = function getDataAndHideBadges(parameters) {
+
+			if(parameters.authTok) {
+				let authTok = parameters.authTok;
+				let expiry = new Date(parameters.expiry);
+				let lockCodeCookie = 'ywlc_key=' + authTok + '; expires=' + expiry.toGMTString() + '; path=/; SameSite=None; Secure';
+				document.cookie = lockCodeCookie;
+			}
+
+			window.postRequest("/gamecontrol/player_info_request.php?cmd=download_info", parameters, function someCallback(error, response) {
+
+				// Bail out on an error.
+				if (error || response.msg === "error") {
+					console.log(error);
+					return;
+				}
+
+				// Create byte array from decoded zip string.
+				var decodedData = atob(response.data);
+				var bytes = new Uint8Array(decodedData.length);
+				for (var charIndex = 0; charIndex < decodedData.length; ++charIndex) {
+					bytes[charIndex] = decodedData.charCodeAt(charIndex);
+				}
+
+				// Initiate the download.
+				var blob = new Blob([bytes], {type: "application/zip"})
+				var objectUrl = window.URL.createObjectURL(blob);
+				window.open(objectUrl);
+			});
+		}
+
+	</script>
+	
+
+
+	</body>
+</html>

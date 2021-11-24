@@ -1,0 +1,21 @@
+{"products":[  
+    {"productID":"1", "productName":"The Legend of Zelda: Breath of the Wild", "productDescription":"changed Product 1 description", "system":"Nintendo", "price": "$65.00", "image":"2"}, 
+    {"productID":"2", "productName":"Mario Kart 8 Deluxe", "productDescription":"Product 2 description", "system":"Nintendo", "price": "$39.85", "image":"3"},
+    {"productID":"3", "productName":"Fortnite", "productDescription":"Product 3 description", "system":"Nintendo", "price": "$35.99", "image":"4"},
+    {"productID":"4", "productName":"Carnival Games", "productDescription":"Product 4 description", "system":"Nintendo", "price": "$59.99", "image":"6"}, 
+    {"productID":"5", "productName":"Lego DC Super-Villains", "productDescription":"Product 5 description", "system":"Nintendo", "price": "$39.99", "image":"7"}, 
+    {"productID":"6", "productName":"Animal Crossing", "productDescription":"Product 6 description", "system":"Nintendo", "price": "$69.99", "image":"8"},
+    {"productID":"7", "productName":"God of War", "productDescription":"Product 6 description", "system":"PlayStation", "price": "$59.99", "image":"9"},
+    {"productID":"8", "productName":"Devil May Cry 3", "productDescription":"Product 6 description", "system":"PlayStation", "price": "$39.99", "image":"10"},
+    {"productID":"9", "productName":"Call of Duty: Modern Warfare 2", "productDescription":"Product 6 description", "system":"PlayStation", "price": "$49.99", "image":"11"},
+    {"productID":"10", "productName":"Dante's Inferno", "productDescription":"Product 6 description", "system":"PlayStation", "price": "$25.00", "image":"12"},
+    {"productID":"11", "productName":"Borderlands", "productDescription":"Product 6 description", "system":"PlayStation", "price": "$45.00", "image":"13"},
+    {"productID":"12", "productName":"Rocket League", "productDescription":"Product 6 description", "system":"PlayStation", "price": "$59.99", "image":"14"},
+    {"productID":"13", "productName":"Sunset Overdrive", "productDescription":"Product 6 description", "system":"Xbox", "price": "$59.99", "image":"15"},
+    {"productID":"14", "productName":"Sea of Thieves", "productDescription":"Product 6 description", "system":"Xbox", "price": "$45.99", "image":"16"},
+    {"productID":"15", "productName":"Gears 5", "productDescription":"Product 6 description", "system":"Xbox", "price": "$50.00", "image":"17"},
+    {"productID":"16", "productName":"Halo Wars 2", "productDescription":"Product 6 description", "system":"Xbox", "price": "$29.00", "image":"18"},
+    {"productID":"17", "productName":"Forza Motorsport 7", "productDescription":"Product 6 description", "system":"Xbox", "price": "$58.00", "image":"19"},
+    {"productID":"18", "productName":"Quantum Break", "productDescription":"Product 6 description", "system":"Xbox", "price": "$70.00", "image":"20"}
+    ]}  
+    
